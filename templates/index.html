@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Home | AI Smart Admission{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="p-5 rounded-4 text-white" style="background:linear-gradient(120deg,#101b3d,#5145cd)">
+    <p class="fw-bold text-uppercase">AI Powered Education Platform</p>
+    <h1 class="display-5 fw-bold">Smart Admission &amp; Academic Guidance</h1>
+    <p class="lead mt-3">Make smarter educational decisions with our AI-enabled student admission and academic guidance platform.</p>
+    <p>Your future starts here. Explore opportunities and plan your academic journey.</p>
+    <a class="btn btn-light btn-lg mt-2 me-2" href="{{ url_for('register') }}">Get Started</a>
+    <a class="btn btn-outline-light btn-lg mt-2" href="{{ url_for('login') }}">Student Login</a>
+  </div>
+  <h2 class="fw-bold mt-5 mb-3">Our Services</h2>
+  <div class="row g-4">
+    <div class="col-md-4"><div class="card p-4 h-100"><h4>🎓 Smart Admission</h4><p>Register and manage student academic information.</p></div></div>
+    <div class="col-md-4"><div class="card p-4 h-100"><h4>🤖 AI Academic Guidance</h4><p>Explore course suggestions based on interests and academic inputs.</p></div></div>
+    <div class="col-md-4"><div class="card p-4 h-100"><h4>📊 Student Dashboard</h4><p>View your personal and academic profile in one place.</p></div></div>
+  </div>
+</div>
+{% endblock %}

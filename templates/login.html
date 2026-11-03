@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Login | AI Smart Admission{% endblock %}
+{% block content %}
+<div class="container"><div class="card p-4 p-md-5 mx-auto" style="max-width:520px">
+<h2 class="fw-bold mb-3">Student Login</h2>
+<form method="POST" action="{{ url_for('login') }}">
+<div class="mb-3"><label class="form-label">Email</label><input class="form-control" type="email" name="email" required></div>
+<div class="mb-3"><label class="form-label">Password</label><input class="form-control" type="password" name="password" required></div>
+<button class="btn btn-main btn-lg w-100" type="submit">Login</button>
+</form>
+<p class="mt-3 mb-0">New student? <a href="{{ url_for('register') }}">Register here</a>.</p>
+</div></div>
+{% endblock %}

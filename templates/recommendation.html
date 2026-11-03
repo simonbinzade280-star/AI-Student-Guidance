@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}AI Academic Guidance{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="card p-4 p-md-5">
+        <div class="text-center mb-4">
+          <span class="badge text-bg-primary mb-2">PERSONALISED ACADEMIC GUIDANCE</span>
+          <h2 class="fw-bold">AI Course Recommendation</h2>
+          <p class="text-secondary">Share your academic details and interests to receive course, career and skill suggestions.</p>
+        </div>
+        <form method="POST" action="{{ url_for('recommendation') }}">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Graduation Status</label>
+              <select class="form-select form-select-lg" name="graduation_status" id="guidance_graduation_status" required>
+                <option value="Completed">Completed</option><option value="Pursuing">Pursuing</option>
+              </select>
+              <div id="guidance_percentage_group" class="mt-3">
+                <label class="form-label fw-semibold">Graduation Percentage</label>
+                <input class="form-control form-control-lg" type="number" name="graduation_percentage" id="guidance_percentage" min="0" max="100" step="0.01" placeholder="e.g. 68.5">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Mathematics Background</label>
+              <select class="form-select form-select-lg" name="mathematics" required>
+                <option value="">Select option</option><option value="Yes">Yes</option><option value="No">No</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label fw-semibold">Your Preferred Interest Area</label>
+              <select class="form-select form-select-lg" name="interest" required>
+                <option value="">Choose your interest</option>
+                <option value="Computer Science">Computer Science & Software</option>
+                <option value="Data Science">Data Science & Analytics</option>
+                <option value="Artificial Intelligence">Artificial Intelligence & Machine Learning</option>
+                <option value="Business">Business & Management</option>
+                <option value="Research">Research & Higher Studies</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-main btn-lg w-100 mt-4" type="submit">Generate My Recommendations →</button>
+        </form>
+        <script>
+        const guidanceStatus = document.getElementById('guidance_graduation_status');
+        const guidancePercentageGroup = document.getElementById('guidance_percentage_group');
+        const guidancePercentage = document.getElementById('guidance_percentage');
+        function updateGuidanceGraduationField() {
+          const pursuing = guidanceStatus.value === 'Pursuing';
+          guidancePercentageGroup.hidden = pursuing;
+          guidancePercentage.required = !pursuing;
+          guidancePercentage.disabled = pursuing;
+        }
+        guidanceStatus.addEventListener('change', updateGuidanceGraduationField);
+        updateGuidanceGraduationField();
+        </script>
+
+        {% if profile %}
+        <hr class="my-4">
+        <div class="alert alert-primary mb-4">
+          <div class="fw-bold">Your Academic Profile: {{ profile }}</div>
+          <small>Suggestions are generated from the details you entered.</small>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="border rounded-3 p-3 h-100">
+              <h5 class="fw-bold">Recommended Courses</h5>
+              <ol class="mb-0">{% for course in recommendations %}<li class="mb-2">{{ course }}</li>{% endfor %}</ol>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="border rounded-3 p-3 h-100">
+              <h5 class="fw-bold">Possible Career Paths</h5>
+              <ul class="mb-0">{% for career in career_paths %}<li class="mb-2">{{ career }}</li>{% endfor %}</ul>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="border rounded-3 p-3">
+              <h5 class="fw-bold">Skills & Next-Step Suggestions</h5>
+              <ul class="mb-0">{% for skill in skill_suggestions %}<li class="mb-2">{{ skill }}</li>{% endfor %}</ul>
+            </div>
+          </div>
+        </div>
+        <p class="small text-secondary mt-3 mb-0">Important: This is an academic guidance prototype, not an admission decision. Course availability and eligibility vary by institution, university, category and admission year. Confirm current criteria from official sources.</p>
+        {% endif %}
+      </div>
+      <div class="text-center mt-3"><a href="{{ url_for('dashboard') }}" class="text-decoration-none">← Back to Dashboard</a></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="fw-bold">Admin Dashboard</h2><p class="text-secondary">Student Admission Management — local demo</p>
+  <div class="row g-4 my-2">
+    <div class="col-md-4"><div class="card p-4"><h6>Total Registered Students</h6><h2 class="text-primary">{{ total_students }}</h2></div></div>
+    <div class="col-md-4"><div class="card p-4"><h6>Academic Guidance</h6><h2 class="text-success">Active</h2></div></div>
+    <div class="col-md-4"><div class="card p-4"><h6>System Status</h6><h2 class="text-success">Online</h2></div></div>
+  </div>
+  <div class="card p-4 mt-4"><h4>Registered Students</h4>
+    <div class="table-responsive"><table class="table table-striped align-middle">
+      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Graduation</th><th>Percentage</th><th>Status</th><th>Update</th></tr></thead>
+      <tbody>
+      {% for student in students %}
+      <tr><td>{{ student.id }}</td><td>{{ student.name }}</td><td>{{ student.email }}</td>
+        <td>{{ student.graduation_course or "-" }}</td><td>{{ student.graduation_percentage or "-" }}{% if student.graduation_percentage and student.graduation_percentage != "Pursuing" %}%{% endif %}</td>
+        <td>{{ student.application_status or "Pending" }}</td>
+        <td><form method="POST" action="{{ url_for('update_application_status', student_id=student.id) }}" class="d-flex gap-2">
+          <select name="status" class="form-select form-select-sm"><option>Pending</option><option>Approved</option><option>Rejected</option></select>
+          <button class="btn btn-sm btn-main" type="submit">Save</button>
+        </form></td></tr>
+      {% else %}
+      <tr><td colspan="7" class="text-center text-secondary">No students registered yet.</td></tr>
+      {% endfor %}
+      </tbody></table></div>
+  </div>
+  <p class="text-secondary small mt-3">Demo note: this admin page is not password-protected. Use only on your local computer.</p>
+</div>
+{% endblock %}

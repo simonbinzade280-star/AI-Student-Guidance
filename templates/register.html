@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Register | AI Smart Admission{% endblock %}
+{% block content %}
+<div class="container"><div class="card p-4 p-md-5 mx-auto" style="max-width:850px">
+<h2 class="fw-bold mb-3">Student Registration</h2>
+<form method="POST" action="{{ url_for('register') }}">
+<div class="row g-3">
+  <div class="col-md-6"><label class="form-label">Full Name *</label><input class="form-control" name="name" required></div>
+  <div class="col-md-6"><label class="form-label">Email *</label><input class="form-control" type="email" name="email" required></div>
+  <div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone"></div>
+  <div class="col-md-6"><label class="form-label">Date of Birth</label><input class="form-control" type="date" name="dob"></div>
+  <div class="col-md-6"><label class="form-label">Category</label><input class="form-control" name="category" placeholder="Optional"></div>
+  <div class="col-md-6"><label class="form-label">Mathematics in 12th?</label><select class="form-select" name="mathematics"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+  <div class="col-md-6"><label class="form-label">12th Percentage</label><input class="form-control" name="twelfth" type="number" min="0" max="100" step="0.01"></div>
+  <div class="col-md-6"><label class="form-label">Graduation Course</label><input class="form-control" name="graduation_course"></div>
+  <div class="col-md-6"><label class="form-label">Graduation Status</label><select class="form-select" name="graduation_status" id="graduation_status"><option value="Completed">Completed</option><option value="Pursuing">Pursuing</option></select></div>
+  <div class="col-md-6" id="graduation_percentage_group"><label class="form-label">Graduation Percentage</label><input class="form-control" name="graduation_percentage" id="graduation_percentage" type="number" min="0" max="100" step="0.01" placeholder="Enter percentage"></div>
+  <div class="col-md-6"><label class="form-label">Post Graduation Course</label><input class="form-control" name="post_graduation_course"></div>
+  <div class="col-md-6"><label class="form-label">Post Graduation Percentage</label><input class="form-control" name="post_graduation_percentage" type="number" min="0" max="100" step="0.01"></div>
+  <div class="col-md-6"><label class="form-label">Entrance Score</label><input class="form-control" name="entrance_score"></div>
+  <div class="col-md-6"><label class="form-label">Password * (minimum 8 characters)</label><input class="form-control" type="password" name="password" minlength="8" required></div>
+  <div class="col-md-6"><label class="form-label">Confirm Password *</label><input class="form-control" type="password" name="confirm_password" minlength="8" required></div>
+</div>
+<script>
+const graduationStatus = document.getElementById('graduation_status');
+const graduationPercentageGroup = document.getElementById('graduation_percentage_group');
+const graduationPercentage = document.getElementById('graduation_percentage');
+function updateGraduationField() {
+  const pursuing = graduationStatus.value === 'Pursuing';
+  graduationPercentageGroup.hidden = pursuing;
+  graduationPercentage.required = !pursuing;
+  graduationPercentage.disabled = pursuing;
+}
+graduationStatus.addEventListener('change', updateGraduationField);
+updateGraduationField();
+</script>
+<button class="btn btn-main btn-lg mt-4" type="submit">Create Account</button>
+</form>
+<p class="mt-3 mb-0">Already registered? <a href="{{ url_for('login') }}">Login here</a>.</p>
+</div></div>
+{% endblock %}

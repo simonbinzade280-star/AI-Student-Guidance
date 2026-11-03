@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="p-4 p-md-5 rounded-4 text-white mb-4" style="background:linear-gradient(120deg,#101b3d,#5145cd)">
+    <h2>Welcome, {{ student.name }}!</h2>
+    <p class="mb-0">Welcome to your AI-Enabled Smart Student Guidance Dashboard.</p>
+  </div>
+  <h4 class="fw-bold mb-3">Student Profile</h4>
+  <div class="row g-4">
+    <div class="col-md-6"><div class="card p-4 h-100"><h5>Personal Information</h5>
+      <p class="text-secondary mb-1">Full Name</p><p class="fw-bold">{{ student.name }}</p>
+      <p class="text-secondary mb-1">Email Address</p><p class="fw-bold">{{ student.email }}</p>
+      <p class="text-secondary mb-1">Mobile Number</p><p class="fw-bold">{{ student.phone or "Not provided" }}</p>
+      <p class="text-secondary mb-1">Category</p><p class="fw-bold">{{ student.category or "Not provided" }}</p>
+    </div></div>
+    <div class="col-md-6"><div class="card p-4 h-100"><h5>Academic Information</h5>
+      <p class="text-secondary mb-1">12th Percentage</p><p class="fw-bold">{{ student.twelfth or "Not provided" }}{% if student.twelfth %}%{% endif %}</p>
+      <p class="text-secondary mb-1">Graduation Course</p><p class="fw-bold">{{ student.graduation_course or "Not provided" }}</p>
+      <p class="text-secondary mb-1">Graduation Percentage</p><p class="fw-bold">{{ student.graduation_percentage or "Not provided" }}{% if student.graduation_percentage and student.graduation_percentage != "Pursuing" %}%{% endif %}</p>
+      <p class="text-secondary mb-1">Post Graduation</p><p class="fw-bold">{{ student.post_graduation_course or "Not Applicable" }}</p>
+      <p class="text-secondary mb-1">Mathematics in 12th</p><p class="fw-bold">{{ student.mathematics or "Not provided" }}</p>
+    </div></div>
+  </div>
+  <div class="card p-4 mt-4"><h5>🤖 AI Academic Guidance</h5>
+    <p class="text-secondary">Get course suggestions based on your academic profile and career interests.</p>
+    <a href="{{ url_for('recommendation') }}" class="btn btn-main">Get AI Recommendations →</a>
+  </div>
+  <a href="{{ url_for('logout') }}" class="btn btn-danger mt-4">Logout</a>
+</div>
+{% endblock %}
